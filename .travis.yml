@@ -42,4 +42,9 @@ jobs:
         edge: true
         app: devopslab1-lfukama
         on:
-          branch: main 
+          branch: main
+ 
+    - stage: Stage Test
+      name: GET URL Stage
+      script:
+        - curl https://devopslab1-lfukama.herokuapp.com/ | Hello World LFukama || travis_terminate 1; 
