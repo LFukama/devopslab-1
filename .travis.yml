@@ -14,6 +14,9 @@ addons:
     organization: lfukama
     token: ${SONAR_TOKEN}
 
+before_install:
+  - openssl aes-256-cbc -K $encrypted_d2f50c5f0871_key -iv $encrypted_d2f50c5f0871_iv -in gcpterraformkey.json.enc -out ../gcpterraformkey.json -d
+
 jobs:
   include:
     - stage: Build & Tests
@@ -47,4 +50,21 @@ jobs:
     - stage: Stage Test
       name: GET URL Stage
       script:
-        - curl https://devopslab1-lfukama.herokuapp.com/ | Hello World LFukama || travis_terminate 1; 
+        - curl https://devopslab1-lfukama.herokuapp.com/ | Hello World LFukama || travis_terminate 1;
+
+    - stage: Production Deploy
+      name: Google Api Engine
+      script: skip
+
+      # Definir o Deploy no Google Cloud
+      deploy:
+        provider: gae
+        keyfile: ../gcpterraformkey.json
+        project: labdevopscloud-lfukama01
+        on:
+          branch: main
+
+    - stage: Production Test
+      name: GET URL Production
+      script:
+        - curl https://devopslab1-lfukama.uc.r.appspot.com/ | Hello World LFukama || travis_terminate 1;
