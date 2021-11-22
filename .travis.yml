@@ -49,7 +49,7 @@ jobs:
     - stage: Stage Test
       name: GET URL Stage
       script:
-        - curl https://devopslab1-lfukama.herokuapp.com/ | grep Hello World LFukama || travis_terminate 1;
+        - curl https://devopslab1-lfukama.herokuapp.com/ | grep Hello World || travis_terminate 1;
 
     - stage: Production Deploy
       name: Google Api Engine
@@ -66,4 +66,4 @@ jobs:
     - stage: Production Test
       name: GET URL Production
       script:
-        - curl https://devopslab1-lfukama.uc.r.appspot.com/ | grep Hello World LFukama || travis_terminate 1;
+        - curl https://devopslab1-lfukama.uc.r.appspot.com/ | grep Hello World || travis_terminate 1;
